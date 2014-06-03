@@ -1,7 +1,6 @@
 from scrapy.spider import BaseSpider
 from scrapy.selector import HtmlXPathSelector, Selector
 from qrator.items import CraigslistSampleItem, QratorItem
-from BeautifulSoup import BeautifulSoup as bs
 
 class MySpider(BaseSpider):
   name = "craig"
@@ -56,7 +55,7 @@ class NYSpider(BaseSpider):
     items = []
     for header in headers:
       item={}
-      item["title"] = header.xpath('title').extract() #header.select("a/text()").extract()
+      item["title"] = header.xpath('title/text()').extract() #header.select("a/text()").extract()
       item["link"] = header.xpath('link').extract() #header.select("a/@href").extract()
       item['description'] = header.xpath('description').extract()
       item['category'] = header.xpath('category').extract()
