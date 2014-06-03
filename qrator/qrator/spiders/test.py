@@ -2,6 +2,8 @@ from scrapy.spider import BaseSpider
 from scrapy.selector import HtmlXPathSelector, Selector
 from qrator.items import CraigslistSampleItem, QratorItem
 
+from bs4 import BeautifulSoup as Soup
+
 class MySpider(BaseSpider):
   name = "craig"
   allowed_domains = ["craigslist.org"]
@@ -43,15 +45,17 @@ class NYSpider(BaseSpider):
 
   def parse(self, response):
       hxs = Selector(response)
-      ##headers = hxs.select("//h3[@class='header']")
       #headers = hxs.xpath("//item").extract()
-      headers = hxs.xpath("//category").extract()
-      print headers
+      #headers = hxs.xpath("//category").extract()
+      headers = hxs.xpath("//item").extract()
+      #print type(headers[0])
       items = []
-      '''
-      for header in headers:
-        item ["title"] = header.select("a/text()").extract()
-        item ["link"] = header.select("a/@href").extract()
-        items.append(item)
-        return items
-      '''
+      for header in headers:        
+        soup = Soup(header, features="xml")
+        entries = soup.findAll('item')
+        for entry in entries:
+          print entry.find('category').string
+        #print header.xpath('title').extract()
+        #items.append(header)
+      #return items
+      
