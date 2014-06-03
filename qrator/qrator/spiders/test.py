@@ -1,6 +1,7 @@
 from scrapy.spider import BaseSpider
 from scrapy.selector import HtmlXPathSelector, Selector
 from qrator.items import CraigslistSampleItem, QratorItem
+from BeautifulSoup import BeautifulSoup as bs
 
 class MySpider(BaseSpider):
   name = "craig"
@@ -42,16 +43,25 @@ class NYSpider(BaseSpider):
   start_urls = ["http://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml"]
 
   def parse(self, response):
-      hxs = Selector(response)
+
+    hxs = Selector(response)
+
+    # print hxs.xpath("//xml").extract()
+
+      
       ##headers = hxs.select("//h3[@class='header']")
       #headers = hxs.xpath("//item").extract()
-      headers = hxs.xpath("//category").extract()
-      print headers
-      items = []
-      '''
-      for header in headers:
-        item ["title"] = header.select("a/text()").extract()
-        item ["link"] = header.select("a/@href").extract()
-        items.append(item)
-        return items
-      '''
+    headers = hxs.xpath("//item")
+
+    items = []
+    for header in headers:
+      item={}
+      item["title"] = header.xpath('title').extract() #header.select("a/text()").extract()
+      item["link"] = header.xpath('link').extract() #header.select("a/@href").extract()
+      item['description'] = header.xpath('description').extract()
+      item['category'] = header.xpath('category').extract()
+      item['pubDate'] = header.xpath('pubDate').extract()
+      items.append(item)
+      print item
+    # return items
+      
