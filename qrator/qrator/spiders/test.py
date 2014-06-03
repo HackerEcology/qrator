@@ -1,5 +1,5 @@
 from scrapy.spider import BaseSpider
-from scrapy.selector import HtmlXPathSelector
+from scrapy.selector import HtmlXPathSelector, Selector
 from qrator.items import CraigslistSampleItem, QratorItem
 
 class MySpider(BaseSpider):
@@ -42,12 +42,16 @@ class NYSpider(BaseSpider):
   start_urls = ["http://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml"]
 
   def parse(self, response):
-      hxs = HtmlXPathSelector(response)
-      headers = hxs.select("//h3[@class='header']")
+      hxs = Selector(response)
+      ##headers = hxs.select("//h3[@class='header']")
+      #headers = hxs.xpath("//item").extract()
+      headers = hxs.xpath("//category").extract()
+      print headers
       items = []
+      '''
       for header in headers:
-          item = QratorItem()
-          item ["title"] = header.select("a/text()").extract()
-          item ["link"] = header.select("a/@href").extract()
-          items.append(item)
-      return items
+        item ["title"] = header.select("a/text()").extract()
+        item ["link"] = header.select("a/@href").extract()
+        items.append(item)
+        return items
+      '''
