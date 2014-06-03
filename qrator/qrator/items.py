@@ -5,12 +5,14 @@
 
 from scrapy.item import Item, Field
 
+
 class QratorItem(Item):
     # define the fields for your item here like:
     # name = Field()
     title = Field()
     link = Field()
 
+
 class CraigslistSampleItem(Item):
-  title = Field()
-  link = Field()
+    title = Field()
+    link = Field()
