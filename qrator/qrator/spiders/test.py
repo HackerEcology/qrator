@@ -1,6 +1,8 @@
 from scrapy.spider import BaseSpider
 from scrapy.selector import HtmlXPathSelector, Selector
 from qrator.items import CraigslistSampleItem, QratorItem
+import json
+import time
 
 class MySpider(BaseSpider):
   name = "craig"
@@ -36,7 +38,7 @@ class MitSpider(BaseSpider):
     return items
     
 ## ny home + ny international home
-class NYSpider(BaseSpider):
+class NYHomeSpider(BaseSpider):
   name = "nytHome"
   allowed_domains = ["nytimes.com"]
   start_urls = ["http://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml"]
@@ -45,22 +47,50 @@ class NYSpider(BaseSpider):
 
     hxs = Selector(response)
 
-    # print hxs.xpath("//xml").extract()
-
-      
-      ##headers = hxs.select("//h3[@class='header']")
-      #headers = hxs.xpath("//item").extract()
     headers = hxs.xpath("//item")
 
     items = []
     for header in headers:
       item={}
       item["title"] = header.xpath('title/text()').extract() #header.select("a/text()").extract()
-      item["link"] = header.xpath('link').extract() #header.select("a/@href").extract()
-      item['description'] = header.xpath('description').extract()
-      item['category'] = header.xpath('category').extract()
-      item['pubDate'] = header.xpath('pubDate').extract()
+      item["link"] = header.xpath('link/text()').extract() #header.select("a/@href").extract()
+      item['description'] = header.xpath('description/text()').extract()
+      item['category'] = header.xpath('category/text()').extract()
+      item['pubDate'] = header.xpath('pubDate/text()').extract()
       items.append(item)
       print item
-    # return items
+
+    f = open('data/' + time.strftime("NYHome-%Y-%m-%d-%H-NYHome") + '.json', 'wb')
+
+    f.write(json.dumps(items))
+
+    f.close()
       
+class NYInternationalHomeSpider(BaseSpider):
+  name = "nytInternationalHome"
+  allowed_domains = ["nytimes.com"]
+  start_urls = ["http://rss.nytimes.com/services/xml/rss/nyt/InternationalHome.xml"]
+
+  def parse(self, response):
+
+    hxs = Selector(response)
+
+    headers = hxs.xpath("//item")
+
+    items = []
+    for header in headers:
+      item={}
+      item["title"] = header.xpath('title/text()').extract() #header.select("a/text()").extract()
+      item["link"] = header.xpath('link/text()').extract() #header.select("a/@href").extract()
+      item['description'] = header.xpath('description/text()').extract()
+      item['category'] = header.xpath('category/text()').extract()
+      item['pubDate'] = header.xpath('pubDate/text()').extract()
+      items.append(item)
+      print item
+
+    f = open('data/' + time.strftime("NYInternationalHome-%Y-%m-%d-%H-NYInternationalHome") + '.json', 'wb')
+
+    f.write(json.dumps(items))
+
+    f.close()
+
