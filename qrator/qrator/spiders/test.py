@@ -119,3 +119,24 @@ class NYInternationalHomeSpider(BaseSpider):
                  '.json', 'wb')
         f.write(json.dumps(items))
         f.close()
+
+# Beautiful soup related parse(), if ever needed..
+"""
+def parse(self, response):
+    hxs = Selector(response)
+    #headers = hxs.xpath("//item").extract()
+    #headers = hxs.xpath("//category").extract()
+    headers = hxs.xpath("//item").extract()
+    # print type(headers[0])
+    items = []
+    for header in headers:
+        soup = Soup(header, features="xml")
+        entries = soup.findAll('item')
+        for entry in entries:
+            print entry.find('category')
+            items.append(entry.find('title'))
+            # print header.xpath('title').extract()
+        # items.append(header)
+    print items[0]
+    # return items
+"""
