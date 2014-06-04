@@ -23,12 +23,12 @@ class MySpider(BaseSpider):
         return items
 
 
-class MitSpider(BaseSpider):
+class TheTechSpider(BaseSpider):
 
     '''
-    MIT Tech Review.
+    MIT "The Tech".
     '''
-    name = "techReview"
+    name = "mitTheTech"
     allowed_domains = ["tech.mit.edu"]
     start_urls = ["http://tech.mit.edu/rss/"]
 
@@ -119,6 +119,51 @@ class NYInternationalHomeSpider(BaseSpider):
                  '.json', 'wb')
         f.write(json.dumps(items))
         f.close()
+
+class HBRSpider(BaseSpider):
+
+    '''
+    Harvard Business Review. 
+    '''
+    name = "HBR"
+    allowed_domains = ["harvardbusiness.org"]
+    start_urls = ["http://feeds.harvardbusiness.org/harvardbusiness"]
+
+    def parse(self, response):
+
+        sel = Selector(response)
+        # print sel
+        regularItems = sel.xpath("//title").extract() #[@class='regularitem']
+        print regularItems
+        # items = []
+        # for titles in titles:
+        #     item = CraigslistSampleItem()
+        #     item["title"] = titles.select("a/text()").extract()
+        #     item["link"] = titles.select("a/@href").extract()
+        #     items.append(item)
+
+        # sel = Selector(response)
+        # headers = sel.xpath("//item")
+        # items = []
+        # for header in headers:
+        #     item = {}
+        #     item["title"] = header.xpath('title/text()').extract()
+        #     item["link"] = header.xpath('link/text()').extract()
+        #     item['description'] = header.xpath('description/text()').extract()
+        #     item['category'] = header.xpath('category/text()').extract()
+        #     item['pubDate'] = header.xpath('pubDate/text()').extract()
+        #     items.append(item)
+        #     print item
+        # if os.path.exists('data'):
+        #     pass
+        # else:
+        #     os.mkdir('data')
+        # f = open('data/' +
+        #          time.strftime("NYHome-%Y-%m-%d-%H-NYHome") +
+        #          '.json', 'wb')
+        # f.write(json.dumps(items))
+        # f.close()
+
 
 # Beautiful soup related parse(), if ever needed..
 """
