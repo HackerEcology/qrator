@@ -5,7 +5,6 @@ import os
 import json
 import time
 
-
 class MySpider(BaseSpider):
     name = "craig"
     allowed_domains = ["craigslist.org"]
@@ -120,6 +119,39 @@ class NYInternationalHomeSpider(BaseSpider):
         f.write(json.dumps(items))
         f.close()
 
+class FTSpider(BaseSpider):
+
+    '''
+    New York Times Internation-Home.
+    '''
+    name = "nytInternationalHome"
+    allowed_domains = ["nytimes.com"]
+    start_urls = [
+        "http://rss.nytimes.com/services/xml/rss/nyt/InternationalHome.xml"]
+
+    def parse(self, response):
+        sel = Selector(response)
+        headers = sel.xpath("//item")
+        items = []
+        for header in headers:
+            item = {}
+            item["title"] = header.xpath('title/text()').extract()
+            item["link"] = header.xpath('link/text()').extract()
+            item['description'] = header.xpath('description/text()').extract()
+            item['category'] = header.xpath('category/text()').extract()
+            item['pubDate'] = header.xpath('pubDate/text()').extract()
+            items.append(item)
+            print item
+        if os.path.exists('data'):
+            pass
+        else:
+            os.mkdir('data')
+        f = open('data/' +
+                 time.strftime("NYInternationalHome-%Y-%m-%d-%H-NYInternationalHome") +
+                 '.json', 'wb')
+        f.write(json.dumps(items))
+        f.close()
+
 class HBRSpider(BaseSpider):
 
     '''
@@ -133,7 +165,7 @@ class HBRSpider(BaseSpider):
 
         sel = Selector(response)
         # print sel
-        regularItems = sel.xpath("//title").extract() #[@class='regularitem']
+        regularItems = sel.xpath("//entry") #[@class='regularitem']
         print regularItems
         # items = []
         # for titles in titles:
