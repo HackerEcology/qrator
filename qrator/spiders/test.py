@@ -160,7 +160,7 @@ class FinancialTimeSpider(BaseSpider):
         sel = Selector(response)
         rssItems = [x.xpath('text()').extract() + x.xpath('@href').extract() for x in sel.xpath("//a") if x.xpath('@href').extract()[0].find('/rss/')!=-1]
         for item in rssItems:
-            print type(scrapy.http.XmlResponse(item[1]))
+            print scrapy.http.XmlResponse(item[1])
         # for rss in rssItems:
             # print rss.xpath('href').extract()
         
