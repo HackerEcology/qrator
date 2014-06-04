@@ -153,36 +153,25 @@ class FinancialTimeSpider(BaseSpider):
     Financial Times All.
     '''
     name = "ft"
-    allowed_domains = ["nytimes.com"]
+    allowed_domains = ["ft.com"]
     start_urls = ["http://www.ft.com/rss"]
 
     def parse(self, response):
+        
         sel = Selector(response)
         rssItems = [x.xpath('text()').extract() + x.xpath('@href').extract() for x in sel.xpath("//a") if x.xpath('@href').extract()[0].find('/rss/')!=-1]
         for item in rssItems:
-            print scrapy.http.XmlResponse(item[1])
+            print item[1]
+            selItem = Selector(scrapy.http.XmlResponse(item[1]))
+            print selItem.extract()
+            # print selItem.extract()
+            # xmlItems = selItem.xpath("//title")
+            # print xmlItems.extract()
         # for rss in rssItems:
             # print rss.xpath('href').extract()
         
-        # items = []
-        # for header in headers:
-        #     item = {}
-        #     item["title"] = header.xpath('title/text()').extract()
-        #     item["link"] = header.xpath('link/text()').extract()
-        #     item['description'] = header.xpath('description/text()').extract()
-        #     item['category'] = header.xpath('category/text()').extract()
-        #     item['pubDate'] = header.xpath('pubDate/text()').extract()
-        #     items.append(item)
-        #     print item
-        # if os.path.exists('data'):
-        #     pass
-        # else:
-        #     os.mkdir('data')
-        # f = open('data/' +
-        #          time.strftime("NYInternationalHome-%Y-%m-%d-%H-NYInternationalHome") +
-        #          '.json', 'wb')
-        # f.write(json.dumps(items))
-        # f.close()
+
+
 
 class HBRSpider(BaseSpider):
 
