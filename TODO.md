@@ -4,6 +4,7 @@
 - [ ] Spiders for:
   - [x] nyt
   - [ ] financial times 
+    - [ ] fix results
   - [ ] hacker news
   - [ ] mit technologyreview
   - [ ] business insider
@@ -15,6 +16,7 @@
 
   - [ ] HBR
     - [x] skeleton
-    - [ ] fix errors
+    - [x] fix errors
+    - [ ] fix Selector vs HtmlXPathSelector issue
 
 - [ ] packaging and testing.
