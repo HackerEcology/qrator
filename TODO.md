@@ -1,7 +1,9 @@
 - [ ] upload module (export direct-to-DB)
 - [ ] data-redundancy checks
 
-- [ ] Spiders for:
+***
+
+- [ ] SPIDERS:
   - [x] nyt
   - [ ] financial times 
     - [ ] fix results
@@ -19,4 +21,5 @@
     - [x] fix errors
     - [ ] fix Selector vs HtmlXPathSelector issue
 
+***
 - [ ] packaging and testing.
