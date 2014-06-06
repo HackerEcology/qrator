@@ -58,3 +58,6 @@ docs/_build/
 *.db
 .floo
 data/
+*.json
+*.csv
+*.xml
