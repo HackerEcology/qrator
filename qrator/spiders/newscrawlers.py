@@ -1,3 +1,7 @@
+"""
+crawler for various news agencies.
+"""
+
 # export using: 
 # $ scrapy crawl nytHome -o items.json -t json
 # for csv/xml/.. simply substitue types
@@ -6,7 +10,7 @@
 # http://developer.nytimes.com/docs
 # http://developer.usatoday.com/
 
-from scrapy.spider import BaseSpider, Spider
+from scrapy.spider import Spider #, BaseSpider
 import scrapy.http
 from scrapy.selector import HtmlXPathSelector, Selector
 
@@ -15,10 +19,10 @@ from qrator.items import \
     NYItem, \
     HBRItem, HBRContributor, HBRAuthor \
 
-import os
-import re
-import json
-import time
+# import os
+# import re
+# import json
+# import time
 
 # print items[0]
 # if os.path.exists('data'):
@@ -50,6 +54,7 @@ import time
 #     print items[0]
 #     # return items
 
+
 class CraigsListSpider(Spider):
     
     '''
@@ -69,6 +74,7 @@ class CraigsListSpider(Spider):
             item["link"] = titles.xpath("a/@href").extract()
             items.append(item)
         return items
+
 
 class MitTechSpider(Spider):
 
@@ -93,7 +99,7 @@ class MitTechSpider(Spider):
                     item2['text'] = str(entry.xpath("a/text()").extract()[1])
                     item2['type'] = temp_title
                     items[temp_title].append(item2)
-                except:
+                except IndexError:
                     continue
                 # print item2
         for key, value in items.iteritems():
@@ -149,6 +155,7 @@ class NYInternationalHomeSpider(Spider):
             items.append(item)
         return items
 
+
 class FinancialTimeSpider(Spider):
 
     '''
@@ -160,17 +167,19 @@ class FinancialTimeSpider(Spider):
 
     def parse(self, response):        
         sel = Selector(response)
-        rssItems = [x.xpath('text()').extract() + x.xpath('@href').extract() \
-                    for x in sel.xpath("//a") if x.xpath('@href').extract()[0].find('/rss/')!=-1]
-        for item in rssItems:
+        rss_items = [x.xpath('text()').extract() + x.xpath('@href').extract() \
+                     for x in sel.xpath("//a") \
+                     if x.xpath('@href').extract()[0].find('/rss/')!=-1]
+        for item in rss_items:
             print item[1]
-            selItem = Selector(scrapy.http.XmlResponse(item[1]))
-            print selItem.extract()
-            # print selItem.extract()
-            # xmlItems = selItem.xpath("//title")
+            sel_item = Selector(scrapy.http.XmlResponse(item[1]))
+            print sel_item.extract()
+            # print sel_item.extract()
+            # xmlItems = sel_item.xpath("//title")
             # print xmlItems.extract()
-        # for rss in rssItems:
+        # for rss in rss_items:
             # print rss.xpath('href').extract()
+
 
 class HBRSpider(Spider):
 
@@ -182,7 +191,7 @@ class HBRSpider(Spider):
     start_urls = ["http://feeds.harvardbusiness.org/harvardbusiness"]
 
     def parse(self, response):
-        sel = HtmlXPathSelector(response)      # Selector() returns [] for '//entry'
+        sel = HtmlXPathSelector(response) # Selector() returns [] for '//entry'
         entries = sel.xpath('//entry')
         items = []
         for entry in entries:
@@ -193,21 +202,22 @@ class HBRSpider(Spider):
             item['updated'] = entry.xpath('updated/text()').extract()
             item['summary'] = entry.xpath('summary/text()').extract()
             # author is nested with [name, uri]
-            author= HBRAuthor()
+            author = HBRAuthor()
             author['name'] = entry.xpath('author/name/text()').extract()
             author['uri'] = entry.xpath('author/uri/text()').extract()
             item['author'] = [dict(author)]
             # contributor is nested with [name, uri]
-            contributor = HBRContributor()
-            contributor['name'] = entry.xpath('contributor/name/text()').extract()
-            contributor['uri'] = entry.xpath('contributor/uri/text()').extract()
-            item['contributor'] = [dict(contributor)]
+            contrib = HBRContributor()
+            contrib['name'] = entry.xpath('contributor/name/text()').extract()
+            contrib['uri'] = entry.xpath('contributor/uri/text()').extract()
+            item['contributor'] = [dict(contrib)]
             item['category'] = entry.xpath('category/@term').extract()
             item['content'] = entry.xpath('content/text()').extract()
             item['origlink'] = entry.xpath('origlink/text()').extract()
             items.append(item)
         return items
 
+        
 class HNSpider(Spider):
 
     '''
