@@ -1,15 +1,35 @@
-from scrapy.spider import BaseSpider
+# export using: 
+# $ scrapy crawl nytHome -o items.json -t json
+# for csv/xml/.. simply substitue types
+
+# API's
+# http://developer.nytimes.com/docs
+# http://developer.usatoday.com/
+
+from scrapy.spider import BaseSpider, Spider
 import scrapy.http
 from scrapy.selector import HtmlXPathSelector, Selector
-from qrator.items import CraigslistSampleItem, QratorItem
+
+from qrator.items import \
+    CraigslistSampleItem, \
+    NYItem, \
+    HBRItem, HBRContributor, HBRAuthor \
+
 import os
 import re
 import json
 import time
 
-# API's
-# http://developer.nytimes.com/docs
-# http://developer.usatoday.com/
+# print items[0]
+# if os.path.exists('data'):
+#     pass
+# else:
+#     os.mkdir('data')
+# f = open('data/' +
+#          time.strftime("NYHome-%Y-%m-%d-%H-%M-%S-NYHome") +
+#          '.json', 'wb')
+# f.write(json.dumps(items))
+# f.close()
 
 # def parse(self, response):
 #     # Beautiful soup related parse(), if ever needed..
@@ -30,27 +50,27 @@ import time
 #     print items[0]
 #     # return items
 
-class MySpider(BaseSpider):
+class CraigsListSpider(Spider):
     
     '''
-    Crags List.
+    Craigs List.
     '''
     name = "craig"
     allowed_domains = ["craigslist.org"]
     start_urls = ["http://sfbay.craigslist.org/npo/"]
 
     def parse(self, response):
-        hxs = HtmlXPathSelector(response)
-        titles = hxs.select("//span[@class='pl']")
+        sel = Selector(response)
+        titles = sel.select("//span[@class='pl']")
         items = []
         for titles in titles:
             item = CraigslistSampleItem()
-            item["title"] = titles.select("a/text()").extract()
-            item["link"] = titles.select("a/@href").extract()
+            item["title"] = titles.xpath("a/text()").extract()
+            item["link"] = titles.xpath("a/@href").extract()
             items.append(item)
         return items
 
-class MitTechSpider(BaseSpider):
+class MitTechSpider(Spider):
 
     '''
     MIT "The Tech".
@@ -81,7 +101,7 @@ class MitTechSpider(BaseSpider):
         # return items
 
 
-class NYHomeSpider(BaseSpider):
+class NYHomeSpider(Spider):
 
     '''
     New York Times Home. 
@@ -95,26 +115,17 @@ class NYHomeSpider(BaseSpider):
         headers = sel.xpath("//item")
         items = []
         for header in headers:
-            item = {}
+            item = NYItem()
             item["title"] = header.xpath('title/text()').extract()
             item["link"] = header.xpath('link/text()').extract()
             item['description'] = header.xpath('description/text()').extract()
             item['category'] = header.xpath('category/text()').extract()
             item['pubDate'] = header.xpath('pubDate/text()').extract()
             items.append(item)
-        print items[0]
-        if os.path.exists('data'):
-            pass
-        else:
-            os.mkdir('data')
-        f = open('data/' +
-                 time.strftime("NYHome-%Y-%m-%d-%H-%M-%S-NYHome") +
-                 '.json', 'wb')
-        f.write(json.dumps(items))
-        f.close()
+        return items
 
-
-class NYInternationalHomeSpider(BaseSpider):
+        
+class NYInternationalHomeSpider(Spider):
 
     '''
     New York Times Internation-Home.
@@ -129,25 +140,16 @@ class NYInternationalHomeSpider(BaseSpider):
         headers = sel.xpath("//item")
         items = []
         for header in headers:
-            item = {}
+            item = NYItem()
             item["title"] = header.xpath('title/text()').extract()
             item["link"] = header.xpath('link/text()').extract()
             item['description'] = header.xpath('description/text()').extract()
             item['category'] = header.xpath('category/text()').extract()
             item['pubDate'] = header.xpath('pubDate/text()').extract()
             items.append(item)
-        print items[0]
-        if os.path.exists('data'):
-            pass
-        else:
-            os.mkdir('data')
-        f = open('data/' +
-                 time.strftime("NYInternationalHome-%Y-%m-%d-%H-%M-%S-NYInternationalHome") +
-                 '.json', 'wb')
-        f.write(json.dumps(items))
-        f.close()
+        return items
 
-class FinancialTimeSpider(BaseSpider):
+class FinancialTimeSpider(Spider):
 
     '''
     Financial Times All.
@@ -170,50 +172,43 @@ class FinancialTimeSpider(BaseSpider):
         # for rss in rssItems:
             # print rss.xpath('href').extract()
 
-class HBRSpider(BaseSpider):
+class HBRSpider(Spider):
 
     '''
-    Harvard Business Review. (with HtmlXPathSelector)
+    Harvard Business Review.
     '''
     name = "HBR"
     allowed_domains = ["harvardbusiness.org"]
     start_urls = ["http://feeds.harvardbusiness.org/harvardbusiness"]
 
     def parse(self, response):
-        sel = HtmlXPathSelector(response)
+        sel = HtmlXPathSelector(response)      # Selector() returns [] for '//entry'
         entries = sel.xpath('//entry')
         items = []
         for entry in entries:
-            item = {}
-            item['title'] = entry.xpath('title/text()').extract()[0]
-            item['id'] = entry.xpath('id/text()').extract()[0]
-            item['link'] = entry.xpath('link/@href').extract()[0]
-            item['updated'] = entry.xpath('updated/text()').extract()[0]
+            item = HBRItem()
+            item['title'] = entry.xpath('title/text()').extract()
+            item['ID'] = entry.xpath('id/text()').extract()
+            item['link'] = entry.xpath('link/@href').extract()
+            item['updated'] = entry.xpath('updated/text()').extract()
             item['summary'] = entry.xpath('summary/text()').extract()
-            # temp = entry.select('//author')
-            item['author'] = {}
-            item['author']['name'] = entry.xpath('author/name/text()').extract()
-            item['author']['uri'] = entry.xpath('author/uri/text()').extract()
-            #temp = entry.select('//contributor')
-            item['contributor'] = {}
-            item['contributor']['name'] = entry.xpath('contributor/name/text()').extract()
-            item['contributor']['uri'] = entry.xpath('contributor/uri/text()').extract()
+            # author is nested with [name, uri]
+            author= HBRAuthor()
+            author['name'] = entry.xpath('author/name/text()').extract()
+            author['uri'] = entry.xpath('author/uri/text()').extract()
+            item['author'] = [dict(author)]
+            # contributor is nested with [name, uri]
+            contributor = HBRContributor()
+            contributor['name'] = entry.xpath('contributor/name/text()').extract()
+            contributor['uri'] = entry.xpath('contributor/uri/text()').extract()
+            item['contributor'] = [dict(contributor)]
             item['category'] = entry.xpath('category/@term').extract()
-            item['content'] = entry.xpath('content/text()').extract()[0]
-            item['origlink'] = entry.xpath('origlink/text()').extract()[0]
+            item['content'] = entry.xpath('content/text()').extract()
+            item['origlink'] = entry.xpath('origlink/text()').extract()
             items.append(item)
-        print items[0]
-        if os.path.exists('data'):
-            pass
-        else:
-            os.mkdir('data')
-        f = open('data/' +
-                 time.strftime("HBR-%Y-%m-%d-%H-%M-%S-HBR") +
-                 '.json', 'wb')
-        f.write(json.dumps(items))
-        f.close()
+        return items
 
-class HNSpider(BaseSpider):
+class HNSpider(Spider):
 
     '''
     Hacker News.
@@ -225,7 +220,7 @@ class HNSpider(BaseSpider):
         pass
 
 
-class MitTechReviewSpider(BaseSpider):
+class MitTechReviewSpider(Spider):
 
     '''
     MIT Tech Review.
@@ -237,7 +232,7 @@ class MitTechReviewSpider(BaseSpider):
         pass
 
 
-class BusinessInsiderSpider(BaseSpider):
+class BusinessInsiderSpider(Spider):
 
     '''
     Business Insider.
@@ -249,7 +244,7 @@ class BusinessInsiderSpider(BaseSpider):
         pass
 
 
-class USATodaySpider(BaseSpider):
+class USATodaySpider(Spider):
 
     '''
     USA Today.
@@ -261,7 +256,7 @@ class USATodaySpider(BaseSpider):
         pass
 
 
-class LATimesSpider(BaseSpider):
+class LATimesSpider(Spider):
 
     '''
     LA Times.
@@ -273,7 +268,7 @@ class LATimesSpider(BaseSpider):
         pass
 
 
-class TheTimesSpider(BaseSpider):
+class TheTimesSpider(Spider):
 
     '''
     The Times.
@@ -285,7 +280,7 @@ class TheTimesSpider(BaseSpider):
         pass
 
 
-class WSJSpider(BaseSpider):
+class WSJSpider(Spider):
 
     '''
     WallStreet Journal.
@@ -297,7 +292,7 @@ class WSJSpider(BaseSpider):
         pass
 
 
-class DiscoverMagSpider(BaseSpider):
+class DiscoverMagSpider(Spider):
 
     '''
     Discover Magazine.
@@ -309,7 +304,7 @@ class DiscoverMagSpider(BaseSpider):
         pass
 
 
-class ArsTechnicaSpider(BaseSpider):
+class ArsTechnicaSpider(Spider):
 
     '''
     Ars Technica.
@@ -321,7 +316,7 @@ class ArsTechnicaSpider(BaseSpider):
         pass
 
 
-# class Spider(BaseSpider):
+# class Spider(Spider):
 
 #     '''
 #     New York Times Internation-Home.
