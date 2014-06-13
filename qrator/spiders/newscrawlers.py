@@ -19,10 +19,10 @@ from qrator.items import \
     NYItem, \
     HBRItem, HBRContributor, HBRAuthor \
 
-# import os
-# import re
-# import json
-# import time
+import os
+import re
+import json
+import time
 
 # print items[0]
 # if os.path.exists('data'):
@@ -336,3 +336,31 @@ class ArsTechnicaSpider(Spider):
 #     start_urls = ["http://feeds.harvardbusiness.org/harvardbusiness"]
 #     def parse(self, response):
 #         pass
+
+
+class ArtistsSpider(Spider):
+
+    '''
+    Important Artists: http://www.theartwolf.com/articles/most-important-painters.htm
+    '''
+
+    name = "artists"
+    allowed_domains = ["theartwolf.com"]
+    start_urls = ["http://www.theartwolf.com/articles/most-important-painters.htm"]
+    def parse(self,response):
+        sel = HtmlXPathSelector(response) # Selector() returns [] for '//entry'
+        entries = sel.xpath("//div[@class='noticiacentro']")[0].xpath("//p")
+        items = []
+        for entry in entries:
+            person = {}
+            name = entry.xpath('strong/text()').extract()
+            description = entry.xpath('text()').extract()
+            if name != [] and description != []:
+                person['name'] = name[0]
+                person['description'] = description[1]
+                items.append(person)
+            # print entry.extract()
+        print items
+        # f = open('artists.json', 'wb')
+        # f.write(json.dumps(items))
+        # f.close()
