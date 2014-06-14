@@ -10,6 +10,7 @@
   - [ ] hacker news
   - [ ] mit technologyreview
   - [ ] business insider
+  - [ ] phys.org
 
   - [ ] mit-tech
     - [x] skeleton
