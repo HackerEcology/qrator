@@ -165,20 +165,34 @@ class FinancialTimeSpider(Spider):
     allowed_domains = ["ft.com"]
     start_urls = ["http://www.ft.com/rss"]
 
+    '''
+    Need to request rss for every url
+    '''
+
     def parse(self, response):        
         sel = Selector(response)
         rss_items = [x.xpath('text()').extract() + x.xpath('@href').extract() \
                      for x in sel.xpath("//a") \
                      if x.xpath('@href').extract()[0].find('/rss/')!=-1]
         for item in rss_items:
-            print item[1]
-            sel_item = Selector(scrapy.http.XmlResponse(item[1]))
-            print sel_item.extract()
+            # print item[1].encode('ascii', errors='backslashreplace')
+            # self.parse_SingleRSS(item[1].encode('ascii', errors='backslashreplace'))
+            yield scrapy.http.Request(url=item[1].encode('ascii', errors='backslashreplace'),callback=self.parse1)
+            # print sel_item
+            # print sel_item.extract()
             # print sel_item.extract()
             # xmlItems = sel_item.xpath("//title")
             # print xmlItems.extract()
         # for rss in rss_items:
             # print rss.xpath('href').extract()
+
+    def parse_SingleRSS(self,rssString):
+        # print rssString
+        return scrapy.http.Request(url=rssString,callback=self.parse1)
+
+    def parse1(self, response):
+        sel = Selector(response)
+        print sel.extract()
 
 
 class HBRSpider(Spider):
@@ -286,6 +300,7 @@ class TheTimesSpider(Spider):
     name = "theTimes"
     allowed_domains = ["thetimes.co.uk"]
     start_urls = ["http://www.thetimes.co.uk/tto/feedindex/"]
+
     def parse(self, response):
         pass
 
