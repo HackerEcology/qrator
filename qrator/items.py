@@ -47,7 +47,6 @@ class FTItem(Item):
     title = Field()
     link = Field()    
     description = Field()
-    category = Field()
     pubDate = Field()
 
 

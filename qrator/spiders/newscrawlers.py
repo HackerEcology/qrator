@@ -17,7 +17,8 @@ from scrapy.selector import HtmlXPathSelector, Selector
 from qrator.items import \
     CraigslistSampleItem, \
     NYItem, \
-    HBRItem, HBRContributor, HBRAuthor \
+    HBRItem, HBRContributor, HBRAuthor, \
+    FTItem \
 
 import os
 import re
@@ -192,7 +193,16 @@ class FinancialTimeSpider(Spider):
 
     def parse1(self, response):
         sel = Selector(response)
-        print sel.extract()
+        headers = sel.xpath("//item")
+        items = []
+        for header in headers:
+            item = FTItem()
+            item["title"] = header.xpath('title/text()').extract()[0]
+            item["link"] = header.xpath('link/text()').extract()[0]
+            item['description'] = header.xpath('description/text()').extract()[0]
+            item['pubDate'] = header.xpath('pubDate/text()').extract()[0]
+            items.append(item)
+        return items
 
 
 class HBRSpider(Spider):
@@ -273,6 +283,7 @@ class USATodaySpider(Spider):
     '''
     USA Today.
     '''
+    
     name = "usaToday"
     allowed_domains = ["usatoday.com"]
     start_urls = ["http://content.usatoday.com/marketing/rss/index.aspx"]
@@ -352,6 +363,9 @@ class ArsTechnicaSpider(Spider):
 #     def parse(self, response):
 #         pass
 
+'''
+This is something totally random
+'''
 
 class ArtistsSpider(Spider):
 
