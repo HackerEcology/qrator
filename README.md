@@ -3,7 +3,7 @@ qrator
 
 This project scrapes data from various news feeds.
  
-# Steps to help you get starter
+# Steps to help you get started
 
 ## Requirements
 
@@ -42,3 +42,5 @@ $ scrapyd-deploy
   ```
   $ scrapyd-deploy default -p qrator 
   ```
+
+- News sources include major agencies like WSJ, HN, NYTimes and so on..
