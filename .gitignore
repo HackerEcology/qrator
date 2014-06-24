@@ -61,3 +61,5 @@ data/
 *.json
 *.csv
 *.xml
+twistd.pid
+*.jl
