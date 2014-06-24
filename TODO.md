@@ -1,5 +1,6 @@
 - [ ] upload module (export direct-to-DB)
 - [ ] data-redundancy checks
+- [x] including docs
 
 ***
 
@@ -23,4 +24,4 @@
     - [ ] fix Selector vs HtmlXPathSelector issue
 
 ***
-- [ ] packaging and testing.
+- [x] packaging and testing.
