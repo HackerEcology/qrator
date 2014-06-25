@@ -67,7 +67,8 @@ class CraigsListSpider(Spider):
 
     def parse(self, response):
         sel = Selector(response)
-        titles = sel.select("//span[@class='pl']")
+        titles = sel.xpath("//span[@class='pl']")
+        #titles = sel.select("//span[@class='pl']")
         items = []
         for titles in titles:
             item = CraigslistSampleItem()
