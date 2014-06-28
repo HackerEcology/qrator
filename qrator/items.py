@@ -49,4 +49,9 @@ class FTItem(Item):
     description = Field()
     pubDate = Field()
 
+class HackerNewsItem(Item):
+    title = Field()
+    link = Field()
+    comments = Field()
+    descriptionLink = Field()
 

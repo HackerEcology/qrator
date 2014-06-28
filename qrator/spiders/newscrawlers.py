@@ -18,7 +18,7 @@ from qrator.items import \
     CraigslistSampleItem, \
     NYItem, \
     HBRItem, HBRContributor, HBRAuthor, \
-    FTItem \
+    FTItem, HackerNewsItem \
 
 import os
 import re
@@ -140,8 +140,7 @@ class NYInternationalHomeSpider(Spider):
     '''
     name = "nytInternationalHome"
     allowed_domains = ["nytimes.com"]
-    start_urls = [
-        "http://rss.nytimes.com/services/xml/rss/nyt/InternationalHome.xml"]
+    start_urls = ["http://rss.nytimes.com/services/xml/rss/nyt/InternationalHome.xml"]
 
     def parse(self, response):
         sel = Selector(response)
@@ -155,6 +154,7 @@ class NYInternationalHomeSpider(Spider):
             item['category'] = header.xpath('category/text()').extract()
             item['pubDate'] = header.xpath('pubDate/text()').extract()
             items.append(item)
+
         return items
 
 
@@ -219,6 +219,7 @@ class HBRSpider(Spider):
         sel = HtmlXPathSelector(response) # Selector() returns [] for '//entry'
         entries = sel.xpath('//entry')
         items = []
+
         for entry in entries:
             item = HBRItem()
             item['title'] = entry.xpath('title/text()').extract()
@@ -237,9 +238,10 @@ class HBRSpider(Spider):
             contrib['uri'] = entry.xpath('contributor/uri/text()').extract()
             item['contributor'] = [dict(contrib)]
             item['category'] = entry.xpath('category/@term').extract()
-            item['content'] = entry.xpath('content/text()').extract()
+            # item['content'] = entry.xpath('content/text()').extract()
             item['origlink'] = entry.xpath('origlink/text()').extract()
             items.append(item)
+
         return items
 
         
@@ -252,8 +254,20 @@ class HNSpider(Spider):
     allowed_domains = ["ycombinator.com"]
     start_urls = ["https://news.ycombinator.com/rss"]
     def parse(self, response):
-        pass
-
+        sel = Selector(response)
+        # print sel.extract()
+        headers = sel.xpath('//item')
+        items = []
+        for header in headers:
+            item = HackerNewsItem()
+            item['title'] = header.xpath('title/text()').extract()[0]
+            item['link'] = header.xpath('link/text()').extract()[0]
+            item['comments'] = header.xpath('comments/text()').extract()[0]
+            item['descriptionLink'] = header.xpath('description/text()').extract()[0]
+            items.append(item)
+        for item in items:
+            print item
+        return items
 
 class MitTechReviewSpider(Spider):
 
@@ -352,6 +366,33 @@ class ArsTechnicaSpider(Spider):
     def parse(self, response):
         pass
 
+
+class TechCrunchSpider(Spider):
+    '''
+    TechCrunch
+    '''
+    name="TechCrunch"
+    allowed_domains = ["techcrunch.com"]
+    start_urls = ["http://techcrunch.com/rssfeeds/"]
+    def parse(self, response):
+        pass
+
+class MashableSpider(Spider):
+    '''
+    Mashable: only the "next big thing"
+    '''
+    name="MashableBigThing"
+    allowed_domains = ["mashable.com"]
+    start_urls = ["http://mashable.com/category/rss/"]
+    def parse(self, response):
+        sel = Selector(response)
+        print sel.extract()
+
+'''
+
+Spiders for ideas
+
+'''
 
 # class Spider(Spider):
 

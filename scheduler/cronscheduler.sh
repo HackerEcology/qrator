@@ -7,7 +7,7 @@ curl http://localhost:6800/schedule.json -d project=default -d spider=nytHome >>
 curl http://localhost:6800/schedule.json -d project=default -d spider=nytInternationalHome >> jobIDs.txt
 curl http://localhost:6800/schedule.json -d project=default -d spider=ft >> jobIDs.txt
 
-# curl http://localhost:6800/schedule.json -d project=default -d spider=hackerNews
+curl http://localhost:6800/schedule.json -d project=default -d spider=hackerNews >> jobIDs.txt
 # curl http://localhost:6800/schedule.json -d project=default -d spider=techReview
 # curl http://localhost:6800/schedule.json -d project=default -d spider=bInsider
 # curl http://localhost:6800/schedule.json -d project=default -d spider=usaToday
