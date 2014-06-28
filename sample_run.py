@@ -5,13 +5,13 @@ from scrapy.crawler import Crawler
 from scrapy.settings import Settings
 from scrapy.xlib.pydispatch import dispatcher
 
-from qrator.spiders.newscrawlers import CraigsListSpider
+from qrator.spiders.newscrawlers import HBRSpider
 
 def stop_reactor():
     reactor.stop()
 
 dispatcher.connect(stop_reactor, signal=signals.spider_closed)
-spider = CraigsListSpider()
+spider = HBRSpider()
 crawler = Crawler(Settings())
 crawler.configure()
 crawler.crawl(spider)
