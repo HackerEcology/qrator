@@ -18,7 +18,7 @@ from qrator.items import \
     CraigslistSampleItem, \
     NYItem, \
     HBRItem, HBRContributor, HBRAuthor, \
-    FTItem, HackerNewsItem \
+    FTItem, HackerNewsItem, TechCrunchItem
 
 import os
 import re
@@ -373,9 +373,24 @@ class TechCrunchSpider(Spider):
     '''
     name="TechCrunch"
     allowed_domains = ["techcrunch.com"]
-    start_urls = ["http://techcrunch.com/rssfeeds/"]
+    start_urls = ["http://feeds.feedburner.com/TechCrunch/"]
     def parse(self, response):
-        pass
+        sel = Selector(response)
+        headers = sel.xpath("//item")
+        items = []
+        for header in headers:
+            item = TechCrunchItem()
+            item["title"] = header.xpath('title/text()').extract()[0]
+            item["link"] = header.xpath('link/text()').extract()[0]
+            item['description'] = header.xpath('description/text()').extract()[0]
+            item['pubDate'] = header.xpath('pubDate/text()').extract()[0]
+            item['categories'] = [x.xpath('text()').extract()[0] for x in header.xpath('//category')]
+            # item['media_thumbnail'] = header.xpath('media:thumbnail').extract()[0]
+            items.append(item)
+        for item in items:
+            print item
+        return items
+        
 
 class MashableSpider(Spider):
     '''
@@ -389,7 +404,6 @@ class MashableSpider(Spider):
         print sel.extract()
 
 '''
-
 Spiders for ideas
 
 '''

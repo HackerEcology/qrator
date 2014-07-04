@@ -55,3 +55,13 @@ class HackerNewsItem(Item):
     comments = Field()
     descriptionLink = Field()
 
+class TechCrunchItem(Item):
+    title = Field()
+    link = Field()
+    pubDate = Field()
+    creator = Field()
+    categories = Field()
+    guid = Field()
+    description = Field()
+    media_thumbnail = Field()
+
