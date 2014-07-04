@@ -65,3 +65,8 @@ class TechCrunchItem(Item):
     description = Field()
     media_thumbnail = Field()
 
+class DiscoverMagItem(Item):
+    title = Field()
+    link = Field()
+    pubDate = Field()
+    description = Field()

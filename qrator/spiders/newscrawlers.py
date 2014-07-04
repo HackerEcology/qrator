@@ -18,7 +18,8 @@ from qrator.items import \
     CraigslistSampleItem, \
     NYItem, \
     HBRItem, HBRContributor, HBRAuthor, \
-    FTItem, HackerNewsItem, TechCrunchItem
+    FTItem, HackerNewsItem, TechCrunchItem, \
+    DiscoverMagItem
 
 import os
 import re
@@ -342,19 +343,6 @@ class WSJSpider(Spider):
     def parse(self, response):
         pass
 
-
-class DiscoverMagSpider(Spider):
-
-    '''
-    Discover Magazine.
-    '''
-    name = "discoverMag"
-    allowed_domains = ["discovermagazine.com"]
-    start_urls = ["http://discovermagazine.com/rss"]
-    def parse(self, response):
-        pass
-
-
 class ArsTechnicaSpider(Spider):
 
     '''
@@ -387,8 +375,6 @@ class TechCrunchSpider(Spider):
             item['categories'] = [x.xpath('text()').extract()[0] for x in header.xpath('//category')]
             # item['media_thumbnail'] = header.xpath('media:thumbnail').extract()[0]
             items.append(item)
-        for item in items:
-            print item
         return items
         
 
@@ -407,6 +393,33 @@ class MashableSpider(Spider):
 Spiders for ideas
 
 '''
+
+'''
+Spiders for science
+'''
+
+class DiscoverMagSpider(Spider):
+
+    '''
+    Discover Magazine.
+    '''
+    name = "DiscoverMag"
+    allowed_domains = ["discovermagazine.com"]
+    start_urls = ["http://feeds.feedburner.com/AllDiscovermagazinecomContent"]
+    def parse(self, response):
+        sel = Selector(response)
+        headers = sel.xpath("//item")
+        items = []
+        for header in headers:
+            item = DiscoverMagItem()
+            item["title"] = header.xpath('title/text()').extract()[0]
+            item["link"] = header.xpath('link/text()').extract()[0]
+            item['description'] = header.xpath('description/text()').extract()[0]
+            item['pubDate'] = header.xpath('pubDate/text()').extract()[0]
+            items.append(item)
+        for item in items:
+            print item
+        return items
 
 # class Spider(Spider):
 
