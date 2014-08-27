@@ -1,5 +1,0 @@
-#!/bin/sh
-
-curl http://localhost:6800/listspiders.json?project=default
-curl http://localhost:6800/schedule.json -d project=default -d spider=HBR
-curl http://localhost:6800/listjobs.json?project=default
