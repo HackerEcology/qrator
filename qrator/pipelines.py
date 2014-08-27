@@ -6,8 +6,6 @@
 import json
 from pyes import ES
 
-DUMP = "/media/F/workspace/A_PERSONAL_projects/HackerEcology/qrator/dumps/"
-
 class QratorPipeline(object):
     def process_item(self, item, spider):
         return item
@@ -15,7 +13,7 @@ class QratorPipeline(object):
 class JsonWriterPipeline(object):
 
     def __init__(self):
-        self.file = open(DUMP+'items.jl', 'wb')
+        self.file = open('items.jl', 'wb')
 
     def process_item(self, item, spider):
         line = json.dumps(dict(item)) + "\n"
