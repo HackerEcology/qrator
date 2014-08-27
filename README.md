@@ -53,3 +53,5 @@ $ scrapyd-deploy
 - sample crawl command: ```$ scrapy crawl HBR```
 
 - http://localhost:6800/ -> Default URL
+
+- http://doc.scrapy.org/en/latest/topics/architecture.html Scrapy Architecture

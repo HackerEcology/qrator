@@ -14,11 +14,13 @@ NEWSPIDER_MODULE = 'qrator.spiders'
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'qrator (+http://www.yourdomain.com)'
 
-### DONT UNCOMMENT: It was faulty! 
-# ITEM_PIPELINES = [
-#   'scrapyelasticsearch.ElasticSearchPipeline',
-# ]
+ITEM_PIPELINES = {
+    'qrator.pipelines.JsonWriterPipeline': 10,
+    'qrator.pipelines.ElasticSearchPipeline': 11,
+    #'scrapyelasticsearch.ElasticSearchPipeline',
+}
 
+### DONT UNCOMMENT: It was faulty! 
 # ELASTICSEARCH_SERVER = 'localhost' # If not 'localhost' prepend 'http://'
 # ELASTICSEARCH_PORT = 9200 # If port 80 leave blank
 # ELASTICSEARCH_USERNAME = ''
