@@ -16,7 +16,8 @@ NEWSPIDER_MODULE = 'qrator.spiders'
 
 ITEM_PIPELINES = {
     'qrator.pipelines.JsonWriterPipeline': 10,
-    'qrator.pipelines.ElasticSearchPipeline': 11,
+    'qrator.pipelines.FilterHTMLPipeline': 11,
+    'qrator.pipelines.ElasticSearchPipeline': 12,
     #'scrapyelasticsearch.ElasticSearchPipeline',
 }
 
