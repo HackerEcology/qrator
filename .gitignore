@@ -64,3 +64,5 @@ data/
 twistd.pid
 *.jl
 venv
+
+!*_mapping.json

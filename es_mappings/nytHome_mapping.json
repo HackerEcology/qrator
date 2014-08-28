@@ -1,0 +1,23 @@
+{
+    "nytHome" : {
+        "properties" : {
+            "pubDate" : {
+                "format" : "dateOptionalTime",
+                "type" : "date"
+            },
+            "description" : {
+                "type" : "string"
+            },
+            "title" : {
+                "type" : "string"
+            },
+            "category" : {
+                "type" : "string",
+		"index": "not_analyzed"
+            },
+            "link" : {
+                "type" : "string"
+            }
+        }
+    }
+}

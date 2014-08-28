@@ -1,0 +1,23 @@
+{
+    "nytInternationalHome" : {
+        "properties" : {
+            "title" : {
+                "type" : "string"
+            },
+            "description" : {
+                "type" : "string"
+            },
+            "pubDate" : {
+                "format" : "dateOptionalTime",
+                "type" : "date"
+            },
+            "category" : {
+                "type" : "string",
+		"index": "not_analyzed"
+            },
+            "link" : {
+                "type" : "string"
+            }
+        }
+    }
+}
