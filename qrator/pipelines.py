@@ -36,5 +36,7 @@ class FilterHTMLPipeline(object):
     def process_item(self, item, spider):
         if spider.name == 'nytInternationalHome' or spider.name == 'nytHome':
             item['description'] = BeautifulSoup(item['description'][0]).text
+            item['title'] = item['title'][0]
+            #item['link'] = item['link'][0]
             item['pubDate'] = parse(item['pubDate'][0]).isoformat()
         return item

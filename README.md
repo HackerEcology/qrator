@@ -7,10 +7,10 @@ This project scrapes data from various news feeds.
 
 ## Requirements
 
-First, install scrapy and scrapyd (Ref: http://scrapyd.readthedocs.org/en/latest/install.html). 
-
-Ensure that service 'scrapyd' is running (sudo service scrapyd start). Then:
-
+- Install requirements: ```$ pip install -r requirements.txt```
+- scrapy (0.23 preferred) and scrapyd (http://scrapyd.readthedocs.org/en/latest/install.html). 
+- Elasticsearch instance running on port 9200
+- Ensure 'scrapyd' is running: ```$ sudo service scrapyd start```
 
 ## Execution steps
 
@@ -50,7 +50,7 @@ $ scrapyd-deploy
 - Refer to ```cmd_curl.sh``` for sample commands. Run this first 
   and go to http://localhost:6800/items/qrator/
 
-- sample crawl command: ```$ scrapy crawl HBR```
+- sample crawl command: ```$ scrapy crawl nytHome```
 
 - http://localhost:6800/ -> Default URL
 
