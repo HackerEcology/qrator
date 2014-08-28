@@ -1,6 +1,6 @@
-- [ ] upload module (export direct-to-DB)
-- [ ] data-redundancy checks
+- [x] upload module (export direct-to-DB)
 - [x] including docs
+- [ ] data-redundancy checks
 
 ***
 
@@ -8,7 +8,7 @@
   - [x] nyt
   - [ ] financial times 
     - [ ] fix results
-  - [ ] hacker news
+  - [x] hacker news
   - [ ] mit technologyreview
   - [ ] business insider
   - [ ] phys.org
@@ -25,3 +25,11 @@
 
 ***
 - [x] packaging and testing.
+- [ ] ES mappings:
+  - [x] nytHome and nytInternationalHome
+  - [ ] HBR
+  - [ ] FT
+  - [ ] HacekerNews
+- [ ] HTML Filter pipelines:
+  - [x] nytHome and nytInternationalHome
+  
