@@ -7,8 +7,6 @@ from scrapy.utils.project import get_project_settings
 #from pdb import set_trace
 
 # from qrator.spiders.newscrawlers import \
-#     CraigsListSpider,\
-#     MitTechSpider,\
 #     NYHomeSpider,\
 #     NYInternationalHomeSpider,\
 #     HBRSpider,\
@@ -18,6 +16,8 @@ from scrapy.utils.project import get_project_settings
 # # FinancialTimeSpider,\
 # # ArtistsSpider,\
 # # MashableSpider,\
+# # MitTechSpider,\
+# # CraigsListSpider,\
 
 # config init
 settings = get_project_settings()

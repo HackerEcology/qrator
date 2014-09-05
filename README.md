@@ -45,7 +45,7 @@ Deploy failed: <urlopen error [Errno 111] Connection refused>
 
 ## NOTE 
 
-- News sources include major agencies like WSJ, HN, NYTimes and so on..
+- News sources include major agencies like DiscoverMag, HN, NYTimes, HBR, TechCrunch and so on..
 
 - http://localhost:6800/ -> Default scrapyd URL
 

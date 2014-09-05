@@ -10,9 +10,14 @@
 
 - [ ] SPIDERS:
   - [x] nyt
-  - [ ] financial times 
+  - [x] nyt Int. Home
+  - [x] Craig # not needed anymore
+  - [x] Hacker News
+  - [x] financial times 
     - [ ] fix results
   - [x] hacker news
+  - [x] Discover Mag
+  - [x] TechCrunch
   - [ ] mit technologyreview
   - [ ] business insider
   - [ ] phys.org
@@ -33,7 +38,7 @@
   - [x] nytHome and nytInternationalHome
   - [ ] HBR
   - [ ] FT
-  - [ ] HacekerNews
+  - [ ] HackerNews
 - [ ] HTML Filter pipelines:
   - [x] nytHome and nytInternationalHome
-  
+  - [x] TechCrunch

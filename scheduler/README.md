@@ -15,8 +15,10 @@
   2. run ```$ crontab -e```, and append  ```*  23 *  *  *     ~/cronscheduler_new.sh```
   3. exit and check job through ```$ crontab -l```
   4. After one sample run after 11 pm, check contents of Elasticsearch index 'qrator',
+  5. After the sample run, check contents of files named with item_*.json in home directory.
+  6. Time of last job is saved to ~/last_job.txt
   - Note: run ```$ ./es_mappings/upload_mapping.sh``` once before scheduling this.
-
+  
 * for deploying a sample job, run ```$ ./cmd_curl.sh```
 
 * for cronscheduler_new.sh to work, create a symbolic link to the qrator source code:
