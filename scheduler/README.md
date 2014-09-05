@@ -3,11 +3,19 @@
   - Run ```$ python scheduler.py```
   - (bug: currently this script doesn't stop unless you press ctrl+c)
 
-* For installing cron job, to run at 11 pm everyday:  
-  1. copy cronscheduler.sh to home dir; then:
+* For installing cron job on ```cronscheduler.sh```, to run at 11 pm everyday:  
+  1. copy cronscheduler.sh to home dir (~/); then:
   2. run ```$ crontab -e```, and append  ```*  23 *  *  *     ~/cronscheduler.sh```
   3. exit and check job through ```$ crontab -l```
   4. After one sample run after 11 pm, check contents of ```~/jobIDs.txt``` (automatically created).
+  - NOTE: This doesn't dump data to ES. Only fills up contents of http://localhost:6800/items/qrator/
+
+* For installing cron job on ```cronscheduler_new.sh```, to run at 11 pm everyday:  
+  1. copy cronscheduler_new.sh to home dir (~/); then:
+  2. run ```$ crontab -e```, and append  ```*  23 *  *  *     ~/cronscheduler_new.sh```
+  3. exit and check job through ```$ crontab -l```
+  4. After one sample run after 11 pm, check contents of Elasticsearch index 'qrator',
+  - Note: run ```$ ./es_mappings/upload_mapping.sh``` once before scheduling this.
 
 * for deploying a sample job, run ```$ ./cmd_curl.sh```
 
