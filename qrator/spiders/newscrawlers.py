@@ -270,89 +270,89 @@ class HNSpider(Spider):
             print item
         return items
 
-class MitTechReviewSpider(Spider):
+# class MitTechReviewSpider(Spider):
 
-    '''
-    MIT Tech Review.
-    '''
-    name = "techReview"
-    allowed_domains = ["technologyreview.com"]
-    start_urls = ["http://www.technologyreview.com/connect/#rss"]
-    def parse(self, response):
-        pass
-
-
-class BusinessInsiderSpider(Spider):
-
-    '''
-    Business Insider.
-    '''
-    name = "bInsider"
-    allowed_domains = ["businessinsider.com"]
-    start_urls = ["http://www.businessinsider.in/rss_feeds.cms"]
-    def parse(self, response):
-        pass
+#     '''
+#     MIT Tech Review.
+#     '''
+#     name = "techReview"
+#     allowed_domains = ["technologyreview.com"]
+#     start_urls = ["http://www.technologyreview.com/connect/#rss"]
+#     def parse(self, response):
+#         pass
 
 
-class USATodaySpider(Spider):
+# class BusinessInsiderSpider(Spider):
 
-    '''
-    USA Today.
-    '''
+#     '''
+#     Business Insider.
+#     '''
+#     name = "bInsider"
+#     allowed_domains = ["businessinsider.com"]
+#     start_urls = ["http://www.businessinsider.in/rss_feeds.cms"]
+#     def parse(self, response):
+#         pass
+
+
+# class USATodaySpider(Spider):
+
+#     '''
+#     USA Today.
+#     '''
     
-    name = "usaToday"
-    allowed_domains = ["usatoday.com"]
-    start_urls = ["http://content.usatoday.com/marketing/rss/index.aspx"]
-    def parse(self, response):
-        pass
+#     name = "usaToday"
+#     allowed_domains = ["usatoday.com"]
+#     start_urls = ["http://content.usatoday.com/marketing/rss/index.aspx"]
+#     def parse(self, response):
+#         pass
 
 
-class LATimesSpider(Spider):
+# class LATimesSpider(Spider):
 
-    '''
-    LA Times.
-    '''
-    name = "laTimes"
-    allowed_domains = ["latimes.com"]
-    start_urls = ["http://www.latimes.com/la-los-angeles-times-rss-feeds-20140507-htmlstory.html"]
-    def parse(self, response):
-        pass
-
-
-class TheTimesSpider(Spider):
-
-    '''
-    The Times.
-    '''
-    name = "theTimes"
-    allowed_domains = ["thetimes.co.uk"]
-    start_urls = ["http://www.thetimes.co.uk/tto/feedindex/"]
-
-    def parse(self, response):
-        pass
+#     '''
+#     LA Times.
+#     '''
+#     name = "laTimes"
+#     allowed_domains = ["latimes.com"]
+#     start_urls = ["http://www.latimes.com/la-los-angeles-times-rss-feeds-20140507-htmlstory.html"]
+#     def parse(self, response):
+#         pass
 
 
-class WSJSpider(Spider):
+# class TheTimesSpider(Spider):
 
-    '''
-    WallStreet Journal.
-    '''
-    name = "wsj"
-    allowed_domains = ["wsj.com"]
-    start_urls = ["http://online.wsj.com/public/page/rss_news_and_feeds.html"]
-    def parse(self, response):
-        pass
+#     '''
+#     The Times.
+#     '''
+#     name = "theTimes"
+#     allowed_domains = ["thetimes.co.uk"]
+#     start_urls = ["http://www.thetimes.co.uk/tto/feedindex/"]
 
-class ArsTechnicaSpider(Spider):
+#     def parse(self, response):
+#         pass
 
-    '''
-    Ars Technica.
-    '''
-    name = "arsTechnica"
-    allowed_domains = ["arstechnica.com"]
-    start_urls = ["arstechnica.com/rss-feeds/"]
-    def parse(self, response):
-        pass
+
+# class WSJSpider(Spider):
+
+#     '''
+#     WallStreet Journal.
+#     '''
+#     name = "wsj"
+#     allowed_domains = ["wsj.com"]
+#     start_urls = ["http://online.wsj.com/public/page/rss_news_and_feeds.html"]
+#     def parse(self, response):
+#         pass
+
+# class ArsTechnicaSpider(Spider):
+
+#     '''
+#     Ars Technica.
+#     '''
+#     name = "arsTechnica"
+#     allowed_domains = ["arstechnica.com"]
+#     start_urls = ["arstechnica.com/rss-feeds/"]
+#     def parse(self, response):
+#         pass
 
 
 class TechCrunchSpider(Spider):
@@ -378,16 +378,16 @@ class TechCrunchSpider(Spider):
         return items
         
 
-class MashableSpider(Spider):
-    '''
-    Mashable: only the "next big thing"
-    '''
-    name="MashableBigThing"
-    allowed_domains = ["mashable.com"]
-    start_urls = ["http://mashable.com/category/rss/"]
-    def parse(self, response):
-        sel = Selector(response)
-        print sel.extract()
+# class MashableSpider(Spider):
+#     '''
+#     Mashable: only the "next big thing"
+#     '''
+#     name="MashableBigThing"
+#     allowed_domains = ["mashable.com"]
+#     start_urls = ["http://mashable.com/category/rss/"]
+#     def parse(self, response):
+#         sel = Selector(response)
+#         print sel.extract()
 
 '''
 Spiders for ideas
@@ -436,29 +436,29 @@ class DiscoverMagSpider(Spider):
 This is something totally random
 '''
 
-class ArtistsSpider(Spider):
+# class ArtistsSpider(Spider):
 
-    '''
-    Important Artists: http://www.theartwolf.com/articles/most-important-painters.htm
-    '''
+#     '''
+#     Important Artists: http://www.theartwolf.com/articles/most-important-painters.htm
+#     '''
 
-    name = "artists"
-    allowed_domains = ["theartwolf.com"]
-    start_urls = ["http://www.theartwolf.com/articles/most-important-painters.htm"]
-    def parse(self,response):
-        sel = HtmlXPathSelector(response) # Selector() returns [] for '//entry'
-        entries = sel.xpath("//div[@class='noticiacentro']")[0].xpath("//p")
-        items = []
-        for entry in entries:
-            person = {}
-            name = entry.xpath('strong/text()').extract()
-            description = entry.xpath('text()').extract()
-            if name != [] and description != []:
-                person['name'] = name[0]
-                person['description'] = description[1]
-                items.append(person)
-            # print entry.extract()
-        print items
-        # f = open('artists.json', 'wb')
-        # f.write(json.dumps(items))
-        # f.close()
+#     name = "artists"
+#     allowed_domains = ["theartwolf.com"]
+#     start_urls = ["http://www.theartwolf.com/articles/most-important-painters.htm"]
+#     def parse(self,response):
+#         sel = HtmlXPathSelector(response) # Selector() returns [] for '//entry'
+#         entries = sel.xpath("//div[@class='noticiacentro']")[0].xpath("//p")
+#         items = []
+#         for entry in entries:
+#             person = {}
+#             name = entry.xpath('strong/text()').extract()
+#             description = entry.xpath('text()').extract()
+#             if name != [] and description != []:
+#                 person['name'] = name[0]
+#                 person['description'] = description[1]
+#                 items.append(person)
+#             # print entry.extract()
+#         print items
+#         # f = open('artists.json', 'wb')
+#         # f.write(json.dumps(items))
+#         # f.close()

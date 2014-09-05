@@ -25,9 +25,12 @@ class JsonWriterPipeline(object):
 class ElasticSearchPipeline(object):
 
     def __init__(self):    
-        self.conn = ES('localhost:9200')
+        self.conn = ES('localhost:9200') 
+        # self.file = open('urls.csv', 'wb')
+        # self.file.write('spider,url' + '\n')
 
-    def process_item(self, item, spider):
+    def process_item(self, item, spider):        
+        #self.file.write(spider.name + ',' + spider.start_urls[0] + '\n')
         self.conn.index(dict(item), "qrator", spider.name)
         return item
 
@@ -37,6 +40,9 @@ class FilterHTMLPipeline(object):
         if spider.name == 'nytInternationalHome' or spider.name == 'nytHome':
             item['description'] = BeautifulSoup(item['description'][0]).text
             item['title'] = item['title'][0]
-            #item['link'] = item['link'][0]
             item['pubDate'] = parse(item['pubDate'][0]).isoformat()
+        elif spider.name == 'TechCrunch':
+            item['description'] = BeautifulSoup(item['description']).text
+            item['title'] = item['title'][0]
+            item['pubDate'] = parse(item['pubDate']).isoformat()
         return item
