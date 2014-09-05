@@ -11,11 +11,11 @@ from scrapy.utils.project import get_project_settings
 #     MitTechSpider,\
 #     NYHomeSpider,\
 #     NYInternationalHomeSpider,\
-#     FinancialTimeSpider,\
 #     HBRSpider,\
 #     HNSpider,\
 #     DiscoverMagSpider,\
 #     TechCrunchSpider
+# # FinancialTimeSpider,\
 # # ArtistsSpider,\
 # # MashableSpider,\
 

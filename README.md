@@ -35,24 +35,20 @@ Deploy failed: <urlopen error [Errno 111] Connection refused>
      ```
      $ scrapyd-deploy          
      ```
-
-* For various scheduling/crawl commands, check ```scheduler/``` 
-
-## NOTE 
-- scrapyd-deploy works directly because the config is already 
+* scrapyd-deploy works directly because the config is already 
   defined in scrapy.cfg file. Else, one has to run:
 
   ```
   $ scrapyd-deploy default -p qrator 
   ```
+* For various scheduling/crawl commands, check ```scheduler/``` 
+
+## NOTE 
 
 - News sources include major agencies like WSJ, HN, NYTimes and so on..
 
-- Refer to ```cmd_curl.sh``` for sample commands. Run this first 
-  and go to http://localhost:6800/items/qrator/
-
-- sample crawl command: ```$ scrapy crawl nytHome```
-
-- http://localhost:6800/ -> Default URL
+- http://localhost:6800/ -> Default scrapyd URL
 
 - http://doc.scrapy.org/en/latest/topics/architecture.html Scrapy Architecture
+
+- Refer to TODO.md for current project status.

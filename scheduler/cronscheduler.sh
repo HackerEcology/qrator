@@ -5,7 +5,7 @@ date >> jobIDs.txt
 curl http://localhost:6800/schedule.json -d project=qrator -d spider=HBR >> jobIDs.txt
 curl http://localhost:6800/schedule.json -d project=qrator -d spider=nytHome >> jobIDs.txt
 curl http://localhost:6800/schedule.json -d project=qrator -d spider=nytInternationalHome >> jobIDs.txt
-curl http://localhost:6800/schedule.json -d project=qrator -d spider=ft >> jobIDs.txt
+#curl http://localhost:6800/schedule.json -d project=qrator -d spider=ft >> jobIDs.txt
 
 curl http://localhost:6800/schedule.json -d project=qrator -d spider=hackerNews >> jobIDs.txt
 # curl http://localhost:6800/schedule.json -d project=qrator -d spider=techReview

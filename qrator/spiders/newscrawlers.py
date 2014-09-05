@@ -159,52 +159,52 @@ class NYInternationalHomeSpider(Spider):
         return items
 
 
-class FinancialTimeSpider(Spider):
+# class FinancialTimeSpider(Spider):
 
-    '''
-    Financial Times All.
-    '''
-    name = "ft"
-    allowed_domains = ["ft.com"]
-    start_urls = ["http://www.ft.com/rss"]
+#     '''
+#     Financial Times All.
+#     '''
+#     name = "ft"
+#     allowed_domains = ["ft.com"]
+#     start_urls = ["http://www.ft.com/rss"]
 
-    '''
-    Need to request rss for every url
-    '''
+#     '''
+#     Need to request rss for every url
+#     '''
 
-    def parse(self, response):        
-        sel = Selector(response)
-        rss_items = [x.xpath('text()').extract() + x.xpath('@href').extract() \
-                     for x in sel.xpath("//a") \
-                     if x.xpath('@href').extract()[0].find('/rss/')!=-1]
-        for item in rss_items:
-            # print item[1].encode('ascii', errors='backslashreplace')
-            # self.parse_SingleRSS(item[1].encode('ascii', errors='backslashreplace'))
-            yield scrapy.http.Request(url=item[1].encode('ascii', errors='backslashreplace'),callback=self.parse1)
-            # print sel_item
-            # print sel_item.extract()
-            # print sel_item.extract()
-            # xmlItems = sel_item.xpath("//title")
-            # print xmlItems.extract()
-        # for rss in rss_items:
-            # print rss.xpath('href').extract()
+#     def parse(self, response):        
+#         sel = Selector(response)
+#         rss_items = [x.xpath('text()').extract() + x.xpath('@href').extract() \
+#                      for x in sel.xpath("//a") \
+#                      if x.xpath('@href').extract()[0].find('/rss/')!=-1]
+#         for item in rss_items:
+#             # print item[1].encode('ascii', errors='backslashreplace')
+#             # self.parse_SingleRSS(item[1].encode('ascii', errors='backslashreplace'))
+#             yield scrapy.http.Request(url=item[1].encode('ascii', errors='backslashreplace'),callback=self.parse1)
+#             # print sel_item
+#             # print sel_item.extract()
+#             # print sel_item.extract()
+#             # xmlItems = sel_item.xpath("//title")
+#             # print xmlItems.extract()
+#         # for rss in rss_items:
+#             # print rss.xpath('href').extract()
 
-    def parse_SingleRSS(self,rssString):
-        # print rssString
-        return scrapy.http.Request(url=rssString,callback=self.parse1)
+#     def parse_SingleRSS(self,rssString):
+#         # print rssString
+#         return scrapy.http.Request(url=rssString,callback=self.parse1)
 
-    def parse1(self, response):
-        sel = Selector(response)
-        headers = sel.xpath("//item")
-        items = []
-        for header in headers:
-            item = FTItem()
-            item["title"] = header.xpath('title/text()').extract()[0]
-            item["link"] = header.xpath('link/text()').extract()[0]
-            item['description'] = header.xpath('description/text()').extract()[0]
-            item['pubDate'] = header.xpath('pubDate/text()').extract()[0]
-            items.append(item)
-        return items
+#     def parse1(self, response):
+#         sel = Selector(response)
+#         headers = sel.xpath("//item")
+#         items = []
+#         for header in headers:
+#             item = FTItem()
+#             item["title"] = header.xpath('title/text()').extract()[0]
+#             item["link"] = header.xpath('link/text()').extract()[0]
+#             item['description'] = header.xpath('description/text()').extract()[0]
+#             item['pubDate'] = header.xpath('pubDate/text()').extract()[0]
+#             items.append(item)
+#         return items
 
 
 class HBRSpider(Spider):

@@ -3,7 +3,7 @@
 - [ ] data-redundancy checks
 - [x] include a proper python scheduler script
   - [ ] fix manual reactor stop action after all spiders crawled. (i.e., Ctrl+C)
-- [ ] fix ft spider parsing all the pages since 2007
+- [ ] fix ft spider parsing all the pages since 2007: currently commented out in newscrawlers.py
 - [ ] fix techcrunch spider: all categories appended everytime to each entry.
 
 ***
