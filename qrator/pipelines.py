@@ -43,6 +43,6 @@ class FilterHTMLPipeline(object):
             item['pubDate'] = parse(item['pubDate'][0]).isoformat()
         elif spider.name == 'TechCrunch':
             item['description'] = BeautifulSoup(item['description']).text
-            item['title'] = item['title'][0]
+            item['title'] = item['title']
             item['pubDate'] = parse(item['pubDate']).isoformat()
         return item
