@@ -52,7 +52,7 @@ class FTItem(Item):
 class HackerNewsItem(Item):
     title = Field()
     link = Field()
-    comments = Field()
+    #comments = Field()
     descriptionLink = Field()
 
 class TechCrunchItem(Item):

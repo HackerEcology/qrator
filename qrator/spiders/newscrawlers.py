@@ -262,7 +262,7 @@ class HNSpider(Spider):
             item = HackerNewsItem()
             item['title'] = header.xpath('title/text()').extract()[0]
             item['link'] = header.xpath('link/text()').extract()[0]
-            item['comments'] = header.xpath('comments/text()').extract()[0]
+            #item['comments'] = header.xpath('comments/text()').extract()[0]
             item['descriptionLink'] = header.xpath('description/text()').extract()[0]
             items.append(item)
         for item in items:
