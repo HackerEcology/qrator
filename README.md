@@ -52,3 +52,11 @@ Deploy failed: <urlopen error [Errno 111] Connection refused>
 - http://doc.scrapy.org/en/latest/topics/architecture.html Scrapy Architecture
 
 - Refer to TODO.md for current project status.
+
+## GUIDELINES
+
+- While mapping fields from crawled data, in the spiders, try to keep the field names unique. For example: 
+  
+  1. pubDate:updated carries same relation as 'published' 
+  2. summary is same as description.
+  3. and so on.. Refer to current items.py

@@ -21,33 +21,33 @@ class HBRItem(Item):
     title = Field()
     link = Field()    
     ID = Field()    
-    updated = Field()    
-    summary = Field()    
+    published = Field()    
+    description = Field()    
     author = Field()        
     contributor = Field()
     category = Field()
     content = Field()
-    origlink = Field()
+    #origlink = Field()
 
 class NYItem(Item):
     title = Field()
     link = Field()    
     description = Field()
     category = Field()
-    pubDate = Field()
+    published = Field()
 
 class MitTechItem(Item):
     title = Field()
     link = Field()    
     description = Field()
     category = Field()
-    pubDate = Field()
+    published = Field()
 
 class FTItem(Item):
     title = Field()
     link = Field()    
     description = Field()
-    pubDate = Field()
+    published = Field()
 
 class HackerNewsItem(Item):
     title = Field()
@@ -58,9 +58,9 @@ class HackerNewsItem(Item):
 class TechCrunchItem(Item):
     title = Field()
     link = Field()
-    pubDate = Field()
-    creator = Field()
-    categories = Field()
+    published = Field()
+    author = Field()
+    category = Field()
     guid = Field()
     description = Field()
     media_thumbnail = Field()
@@ -68,5 +68,5 @@ class TechCrunchItem(Item):
 class DiscoverMagItem(Item):
     title = Field()
     link = Field()
-    pubDate = Field()
+    published = Field()
     description = Field()

@@ -57,26 +57,26 @@ import time
 #     # return items
 
 
-class CraigsListSpider(Spider):
+# class CraigsListSpider(Spider):
     
-    '''
-    Craigs List.
-    '''
-    name = "craig"
-    allowed_domains = ["craigslist.org"]
-    start_urls = ["http://sfbay.craigslist.org/npo/"]
+#     '''
+#     Craigs List.
+#     '''
+#     name = "craig"
+#     allowed_domains = ["craigslist.org"]
+#     start_urls = ["http://sfbay.craigslist.org/npo/"]
 
-    def parse(self, response):
-        sel = Selector(response)
-        titles = sel.xpath("//span[@class='pl']")
-        #titles = sel.select("//span[@class='pl']")
-        items = []
-        for titles in titles:
-            item = CraigslistSampleItem()
-            item["title"] = titles.xpath("a/text()").extract()
-            item["link"] = titles.xpath("a/@href").extract()
-            items.append(item)
-        return items
+#     def parse(self, response):
+#         sel = Selector(response)
+#         titles = sel.xpath("//span[@class='pl']")
+#         #titles = sel.select("//span[@class='pl']")
+#         items = []
+#         for titles in titles:
+#             item = CraigslistSampleItem()
+#             item["title"] = titles.xpath("a/text()").extract()
+#             item["link"] = titles.xpath("a/@href").extract()
+#             items.append(item)
+#         return items
 
 
 class MitTechSpider(Spider):
@@ -129,7 +129,7 @@ class NYHomeSpider(Spider):
             item["link"] = header.xpath('link/text()').extract()
             item['description'] = header.xpath('description/text()').extract()
             item['category'] = header.xpath('category/text()').extract()
-            item['pubDate'] = header.xpath('pubDate/text()').extract()
+            item['published'] = header.xpath('pubDate/text()').extract()
             items.append(item)
         return items
 
@@ -153,7 +153,7 @@ class NYInternationalHomeSpider(Spider):
             item["link"] = header.xpath('link/text()').extract()
             item['description'] = header.xpath('description/text()').extract()
             item['category'] = header.xpath('category/text()').extract()
-            item['pubDate'] = header.xpath('pubDate/text()').extract()
+            item['published'] = header.xpath('pubDate/text()').extract()
             items.append(item)
 
         return items
@@ -202,7 +202,7 @@ class NYInternationalHomeSpider(Spider):
 #             item["title"] = header.xpath('title/text()').extract()[0]
 #             item["link"] = header.xpath('link/text()').extract()[0]
 #             item['description'] = header.xpath('description/text()').extract()[0]
-#             item['pubDate'] = header.xpath('pubDate/text()').extract()[0]
+#             item['published'] = header.xpath('pubDate/text()').extract()[0]
 #             items.append(item)
 #         return items
 
@@ -225,22 +225,21 @@ class HBRSpider(Spider):
             item = HBRItem()
             item['title'] = entry.xpath('title/text()').extract()
             item['ID'] = entry.xpath('id/text()').extract()
-            item['link'] = entry.xpath('link/@href').extract()
-            item['updated'] = entry.xpath('updated/text()').extract()
-            item['summary'] = entry.xpath('summary/text()').extract()
+            item['published'] = entry.xpath('updated/text()').extract()
+            item['description'] = entry.xpath('summary/text()').extract()
             # author is nested with [name, uri]
             author = HBRAuthor()
             author['name'] = entry.xpath('author/name/text()').extract()
             author['uri'] = entry.xpath('author/uri/text()').extract()
-            item['author'] = [dict(author)]
+            item['author'] = dict(author)
             # contributor is nested with [name, uri]
-            contrib = HBRContributor()
-            contrib['name'] = entry.xpath('contributor/name/text()').extract()
-            contrib['uri'] = entry.xpath('contributor/uri/text()').extract()
-            item['contributor'] = [dict(contrib)]
+            # contrib = HBRContributor()
+            # contrib['name'] = entry.xpath('contributor/name/text()').extract()
+            # contrib['uri'] = entry.xpath('contributor/uri/text()').extract()
+            #item['contributor'] = [dict(contrib)]
             item['category'] = entry.xpath('category/@term').extract()
             # item['content'] = entry.xpath('content/text()').extract()
-            item['origlink'] = entry.xpath('origlink/text()').extract()
+            item['link'] = entry.xpath('origlink/text()').extract()
             items.append(item)
 
         return items
@@ -371,8 +370,9 @@ class TechCrunchSpider(Spider):
             item["title"] = header.xpath('title/text()').extract()[0]
             item["link"] = header.xpath('link/text()').extract()[0]
             item['description'] = header.xpath('description/text()').extract()[0]
-            item['pubDate'] = header.xpath('pubDate/text()').extract()[0]
-            item['categories'] = [x.xpath('text()').extract()[0] for x in header.xpath('//category')]
+            item['published'] = header.xpath('pubDate/text()').extract()[0]
+            item['category'] = [x.xpath('text()').extract()[0] for x in header.xpath('//category')]
+            #item['author'] = header.xpath('dc:creator/text()').extract()
             # item['media_thumbnail'] = header.xpath('media:thumbnail').extract()[0]
             items.append(item)
         return items
@@ -415,7 +415,7 @@ class DiscoverMagSpider(Spider):
             item["title"] = header.xpath('title/text()').extract()[0]
             item["link"] = header.xpath('link/text()').extract()[0]
             item['description'] = header.xpath('description/text()').extract()[0]
-            item['pubDate'] = header.xpath('pubDate/text()').extract()[0]
+            item['published'] = header.xpath('pubDate/text()').extract()[0]
             items.append(item)
         for item in items:
             print item

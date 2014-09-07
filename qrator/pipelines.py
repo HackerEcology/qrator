@@ -39,10 +39,22 @@ class FilterHTMLPipeline(object):
     def process_item(self, item, spider):
         if spider.name == 'nytInternationalHome' or spider.name == 'nytHome':
             item['description'] = BeautifulSoup(item['description'][0]).text
+            #item['description'] = item['description'][0]
             item['title'] = item['title'][0]
-            item['pubDate'] = parse(item['pubDate'][0]).isoformat()
+            item['link'] = item['link'][0]
+            item['published'] = parse(item['published'][0]).isoformat()
         elif spider.name == 'TechCrunch':
-            item['description'] = BeautifulSoup(item['description']).text
+            #item['description'] = BeautifulSoup(item['description']).text
             item['title'] = item['title']
-            item['pubDate'] = parse(item['pubDate']).isoformat()
+            item['published'] = parse(item['published']).isoformat()
+        elif spider.name == 'HBR':
+            item['title'] = item['title'][0]
+            item['description'] = item['description'][0]
+            item['link'] = item['link'].pop()
+            #item['origlink'] = item['origlink'][0]
+            item['ID'] = item['ID'][0]
+            item['published'] = parse(item['published'][0]).isoformat()
+        elif spider.name == 'DiscoverMag':
+            item['published'] = parse(item['published']).isoformat()
+        
         return item
