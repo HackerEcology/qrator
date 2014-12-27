@@ -7,6 +7,10 @@ This project scrapes data from various news feeds.
 
 ## Requirements
 
+- Install devel packs:
+  - On Fedora/RHEL: ```# yum install libxslt-devel python-devel```
+  - On Ubuntu: ```# apt-get install libxml2-dev libxslt1-dev python-dev```
+
 - Install requirements: ```$ pip install -r requirements.txt```
 - scrapy (0.23 preferred) and scrapyd (http://scrapyd.readthedocs.org/en/latest/install.html). 
 - Elasticsearch instance running on port 9200
