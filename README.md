@@ -11,10 +11,14 @@ This project scrapes data from various news feeds.
   - On Fedora/RHEL: ```# yum install libxslt-devel python-devel```
   - On Ubuntu: ```# apt-get install libxml2-dev libxslt1-dev python-dev```
 
+- Install pip and virtualenv ```# yum/apt-get install python-pip; pip install virtualenv```
+- Go to project root and run ```# virtualenv venv; sourve venv/bin/activate```
 - Install requirements: ```$ pip install -r requirements.txt```
 - scrapy (0.23 preferred) and scrapyd (http://scrapyd.readthedocs.org/en/latest/install.html). 
 - Elasticsearch instance running on port 9200
+
 - Ensure 'scrapyd' is running: ```$ sudo service scrapyd start```
+  - Note: refer execution steps below if you get error here.
 
 ## Execution steps
 
