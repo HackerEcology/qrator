@@ -4,7 +4,7 @@ Twisted==14.0.0
 argparse==1.2.1
 beautifulsoup4==4.3.2
 cffi==0.8.6
-cryptography==0.5.4
+cryptography==3.2
 cssselect==0.9.1
 gevent==1.0.1
 greenlet==0.4.3
