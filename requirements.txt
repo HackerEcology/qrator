@@ -1,6 +1,6 @@
 Scrapy==0.24.4
 ScrapyElasticSearch==0.4
-Twisted==14.0.0
+Twisted==20.3.0
 argparse==1.2.1
 beautifulsoup4==4.3.2
 cffi==0.8.6
