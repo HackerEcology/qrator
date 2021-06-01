@@ -17,7 +17,7 @@ python-dateutil==2.2
 queuelib==1.2.2
 requests==2.3.0
 six==1.7.3
-urllib3==1.9
+urllib3==1.26.5
 w3lib==1.10.0
 wsgiref==0.1.2
 zope.interface==4.1.1
