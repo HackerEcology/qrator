@@ -1,4 +1,4 @@
-Scrapy==0.24.4
+Scrapy==1.8.1
 ScrapyElasticSearch==0.4
 Twisted==14.0.0
 argparse==1.2.1
