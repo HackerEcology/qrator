@@ -9,7 +9,7 @@ cssselect==0.9.1
 gevent==1.0.1
 greenlet==0.4.3
 grequests==0.2.0
-lxml==3.3.5
+lxml==4.9.1
 pyOpenSSL==0.14
 pycparser==2.10
 pyes==0.99.4
